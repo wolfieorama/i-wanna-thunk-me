@@ -1,36 +1,18 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import * as actionCreator from './store/actions/actions';
+import { connect } from 'react-redux';
 
 export class Employee extends Component {
-    constructor(props){
-        super(props)
-        this.state = {
-            employees: [],
-            isloaded : false
-        }
-    }
 
     componentDidMount = () => {
-        const url = "http://dummy.restapiexample.com/api/v1/employees";
-        axios.get(url)
-        .then(res =>{
-            console.log(res.data)
-            this.setState({
-                employees: res.data,
-                isloaded: true
-            })
-        })
-        .catch(error => {
-            console.log(error)
-        })
+        this.props.fetchData("http://dummy.restapiexample.com/api/v1/employees");
     }
     
     render() {
-        const { employees } = this.state;
 
         return (
             <div>
-               {employees.map(employee =>
+               {this.props.employees.map(employee =>
                     <li key={employee.id}>
                         Name: {employee.employee_name}
                     </li>
@@ -40,4 +22,18 @@ export class Employee extends Component {
     }
 }
 
-export default Employee
+const mapStateToProps = (state) => {
+    return {
+        employees: state.employees,
+        isloaded: state.isloaded,
+        error: state.error
+    };
+};
+
+const mapDispatchToProps = (dispatch) =>{
+    return {
+        fetchData: (url) => dispatch(actionCreator.itemsFetchData(url))
+    };
+  }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Employee)
