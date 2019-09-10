@@ -1,5 +1,6 @@
 import React from 'react';
-import Employee from './Employee';
+import Employee from './components/employees/Employee';
+import Item from './components/items/Items';
 
 function App() {
   return (
@@ -8,6 +9,7 @@ function App() {
       </header>
 
       <Employee />
+      <Item />
     </div>
   );
 }

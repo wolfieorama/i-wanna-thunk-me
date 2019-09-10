@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import * as actionCreator from './store/actions/actions';
+import { itemsFetchData } from '../../store/actions/employeeActions';
 import { connect } from 'react-redux';
 
 export class Employee extends Component {
@@ -25,14 +25,13 @@ export class Employee extends Component {
 const mapStateToProps = (state) => {
     return {
         employees: state.employees,
-        isloaded: state.isloaded,
         error: state.error
     };
 };
 
 const mapDispatchToProps = (dispatch) =>{
     return {
-        fetchData: (url) => dispatch(actionCreator.itemsFetchData(url))
+        fetchData: (url) => dispatch(itemsFetchData(url))
     };
   }
 
