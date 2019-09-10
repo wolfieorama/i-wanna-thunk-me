@@ -15,3 +15,15 @@ export function employees(state = [], action) {
             return state;
     }
 }
+
+export function addEmployees(state = [], action) {
+
+    // const newState = {...state}
+
+    switch (action.type) {
+        case 'ADD_EMPLOYEE':
+            return  [state, action.data];
+        default:
+            return state;
+    }
+}

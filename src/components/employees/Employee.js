@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { itemsFetchData } from '../../store/actions/employeeActions';
+import { itemsFetchData, itemsSendData } from '../../store/actions/employeeActions';
 import { connect } from 'react-redux';
 
 export class Employee extends Component {
@@ -7,11 +7,18 @@ export class Employee extends Component {
     componentDidMount = () => {
         this.props.fetchData("http://dummy.restapiexample.com/api/v1/employees");
     }
+
+    addEmployee = () => {
+        this.props.addDAta("http://dummy.restapiexample.com/api/v1/create",
+         {"name":"nugu","salary":"123","age":"23"});
+         console.log("data sent", 1)
+    }
+
     
     render() {
-
         return (
             <div>
+                <button onClick={this.addEmployee}>Add employee</button>
                {this.props.employees.map(employee =>
                     <li key={employee.id}>
                         Name: {employee.employee_name}
@@ -31,7 +38,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) =>{
     return {
-        fetchData: (url) => dispatch(itemsFetchData(url))
+        fetchData: (url) => dispatch(itemsFetchData(url)),
+        addDAta: (url, data) => dispatch(itemsSendData(url, data))
     };
   }
 
